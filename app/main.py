@@ -1,0 +1,19 @@
+from flask import Flask, request, send_file
+from PIL import Image
+import io
+
+app = Flask(__name__)
+
+@app.route('/resize', methods=['POST'])
+def resize():
+    file = request.files['image']
+    img = Image.open(file.stream)
+    resized = img.resize((200, 200))
+
+    buf = io.BytesIO()
+    resized.save(buf, format='PNG')
+    buf.seek(0)
+    return send_file(buf, mimetype='image/png')
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)

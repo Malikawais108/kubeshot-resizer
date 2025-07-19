@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubeshot-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kubeshot
+  template:
+    metadata:
+      labels:
+        app: kubeshot
+    spec:
+      containers:
+      - name: kubeshot
+        image: awaismalak/kubeshot:latest
+        ports:
+        - containerPort: 5000
